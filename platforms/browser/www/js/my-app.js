@@ -18,7 +18,7 @@ $$(document).on('deviceready', function () {
 // Handle exit button
 $$('#exit').on('click', function () {
   if (navigator.app) {
-    navigator.app.exitApp();
+    navigator.app.exitApp()
   } else if (navigator.device) {
     navigator.device.exitApp()
   } else {
