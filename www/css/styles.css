@@ -1,0 +1,12 @@
+.statusbar-overlay {
+    background: black;
+  }
+  .page {
+    margin-top: 56px;
+  }
+  .left, .right {
+    padding: 10px;
+  }
+  .button {
+    font-size: 20px;
+  }
