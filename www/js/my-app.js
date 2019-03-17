@@ -15,6 +15,17 @@ $$(document).on('deviceready', function () {
   console.log('Device is ready!')
 })
 
+// Handle exit button
+$$('#exit').on('click', function () {
+  if (navigator.app) {
+    navigator.app.exitApp()
+  } else if (navigator.device) {
+    navigator.device.exitApp()
+  } else {
+    window.close()
+  }
+})
+
 // Handle refresh button
 $$('#refresh').on('click', function () {
   console.log('Refresh clicked')

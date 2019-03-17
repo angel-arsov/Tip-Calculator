@@ -15,6 +15,17 @@ $$(document).on('deviceready', function () {
   console.log('Device is ready!')
 })
 
+// Handle exit button
+$$('#exit').on('click', function () {
+  if (navigator.app) {
+    navigator.app.exitApp();
+  } else if (navigator.device) {
+    navigator.device.exitApp()
+  } else {
+    window.close()
+  }
+})
+
 // Handle refresh button
 $$('#refresh').on('click', function () {
   console.log('Refresh clicked')
@@ -46,7 +57,7 @@ $$(document).on('click touchend', function (event) {
       $$('.fa-glass-cheers').css('color', '#bfcd3a')
       $$('.fa-hamburger').css('color', '#8e8e93')
       $$('.fa-mug-hot').css('color', '#8e8e93')
-    } 
+    }
 
     // Second group of radio buttons
     if ($$('#smile-1').prop('checked')) {
