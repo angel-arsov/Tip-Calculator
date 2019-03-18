@@ -28,7 +28,7 @@ $$('#exit').on('click', function () {
 
 // Handle refresh button
 $$('#refresh').on('click', function () {
-  console.log('Refresh clicked')
+  window.location.reload()
 })
 
 // Handle groups of radio buttons

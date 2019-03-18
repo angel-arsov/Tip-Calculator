@@ -39,6 +39,7 @@
   <div class="views">
     <!-- Your main view, should have "view-main" class -->
     <div class="view view-main">
+
       <!-- Top Navbar-->
       <div class="navbar">
         <div class="navbar-inner sliding">
@@ -51,6 +52,7 @@
           </div>
         </div>
       </div>
+
       <!-- Page, "data-page" contains page name -->
       <div data-page="index" class="page">
         <div class="page-content">
@@ -102,24 +104,20 @@
           </div>
 
           <!-- Input Form -->
-          <div class="list input-wrapper">
-            <ul>
-              <li class="item-content item-input">
-                <div class="item-inner">
-                  <div class="item-input-wrap">
-                    <input type="number" id="bill-input" placeholder="Insert your bill here">
-                    <input type="submit" class="button" value="Enter">
-                  </div>
-                </div>
-              </li>
-            </ul>
+          <div class="content-block">
+            <div class="list">
+              <ul>
+                <li class="row">
+                  <label class="item-content" id="number-label">
+                    <input type="number" placeholder="Your Bill">
+                  </label>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-      <!-- Bottom Toolbar-->
-      <div class="toolbar">
-        <div class="toolbar-inner"></div>
-      </div>
+      <!-- Bottom Toolbar deleted for now-->
     </div>
   </div>
 
