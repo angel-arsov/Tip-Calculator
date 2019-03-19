@@ -62,7 +62,7 @@ h1 {
   font-size: 30px;
 }
 #number-label {
-  margin-right: 25%;
+  margin: auto;
 }
 input[type="number"] {
   direction: ltr;
