@@ -82,3 +82,17 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
+#tip {
+  text-align: center;
+  font-size: 40px;
+  margin: auto;
+}
+.card {
+  background-color: #009688;
+  background-image: -moz-radial-gradient(center, ellipse cover, #b5ffef 0%, #009688 100%);
+  background-image: -webkit-radial-gradient(center, ellipse cover, #b5ffef 0%,#009688 100%);
+  background-image: radial-gradient(ellipse at center, #b5ffef 0%,#009688 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5ffef', endColorstr='#009688',GradientType=1 );
+  border-radius: 20px;
+  margin: 8px 20px 8px 20px;
+}
