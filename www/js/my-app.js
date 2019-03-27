@@ -1,11 +1,11 @@
 // Initialize app
-let myApp = new Framework7()
+let app = new Framework7()
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 let $$ = Dom7
 
 // Add view
-let mainView = myApp.addView('.view-main', {
+let mainView = app.addView('.view-main', {
   // Because we want to use dynamic navbar, we need to enable it for this view:
   dynamicNavbar: true
 })
@@ -29,6 +29,31 @@ $$('#exit').on('click', function () {
 // Handle refresh button
 $$('#refresh').on('click', function () {
   window.location.reload()
+})
+
+// Create dynamic popover
+let dynamicPopover = $$('a.dynamic-popover')
+dynamicPopover.on('click', function () {
+  let clickedLink = this
+  let content = '<div class="popover">' +
+                  '<div class="popover-inner">' +
+                    '<div class="content-block">' +
+                      '<div class="list">' +
+                        '<ul>' +
+                          '<li class="row">' +
+                            '<a href="#" class="button color-teal" id="bill-btn">' +
+                              '<i class="fas fa-check-circle"></i>' +
+                            '</a>' +
+                            '<label class="item-content" id="number-label">' +
+                              '<input type="number" placeholder="Your Bill" id="bill-input">' +
+                            '</label>' +
+                          '</li>' +
+                        '</ul>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>'
+  app.popover(content, clickedLink)
 })
 
 // Handle groups of radio buttons
@@ -75,5 +100,14 @@ $$(document).on('click touchend', function (event) {
       $$('.fa-smile').css('color', '#8e8e93')
       $$('.fa-meh-rolling-eyes').css('color', '#8e8e93')
     }
+
+    $$('#bill-btn').on('click', function () {
+      if ($$('#bill-input').prop('value') !== '') {
+        app.closeModal(dynamicPopover)
+        $$('.popover').css('display', 'none')
+        $$('#tip').remove()
+        $$('.card-content').append('<p id="tip">10.00</p>')
+      }
+    })
   }
 })
