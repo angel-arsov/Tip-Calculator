@@ -105,3 +105,8 @@ h1, .block {
   border-radius: 20px;
   margin: 8px 20px 8px 20px;
 }
+.dynamic-popover {
+  border: 2px solid;
+  padding: 10px;
+  border-radius: 20px;
+}

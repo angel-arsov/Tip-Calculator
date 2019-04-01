@@ -56,7 +56,7 @@ dynamicPopover.on('click', function () {
   app.popover(content, clickedLink)
 })
 
-// Handle groups of radio buttons
+// Handle tap events
 let detectTap = false
 $$(document).on('touchstart', function () {
   detectTap = true // detects all touch events
@@ -101,12 +101,16 @@ $$(document).on('click touchend', function (event) {
       $$('.fa-meh-rolling-eyes').css('color', '#8e8e93')
     }
 
+    // Bill button
     $$('#bill-btn').on('click', function () {
       if ($$('#bill-input').prop('value') !== '') {
+        let billInput = $$('#bill-input').prop('value')
         app.closeModal(dynamicPopover)
         $$('.popover').css('display', 'none')
-        $$('#tip').remove()
-        $$('.card-content').append('<p id="tip">10.00</p>')
+        dynamicPopover.text(`Your Bill is: ${billInput}`)
+        dynamicPopover.prepend('<i class="far fa-edit" style="margin-left:5px;"></i>')
+        // $$('#tip').remove()
+        // $$('.card-content').append('<p id="tip">10.00</p>')
       }
     })
   }
