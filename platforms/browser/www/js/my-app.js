@@ -1,11 +1,11 @@
 // Initialize app
-let app = new Framework7()
+const app = new Framework7()
 
 // If we need to use custom DOM library, let's save it to $$ variable:
-let $$ = Dom7
+const $$ = Dom7
 
 // Add view
-let mainView = app.addView('.view-main', {
+app.addView('.view-main', {
   // Because we want to use dynamic navbar, we need to enable it for this view:
   dynamicNavbar: true
 })
@@ -103,15 +103,18 @@ $$(document).on('click touchend', function (event) {
 
     // Bill button
     $$('#bill-btn').on('click', function () {
-      if ($$('#bill-input').prop('value') !== '') {
-        let billInput = $$('#bill-input').prop('value')
-        app.closeModal(dynamicPopover)
-        $$('.popover').css('display', 'none')
+      let billInput = $$('#bill-input').prop('value')
+      if (billInput !== '') {
+        app.closeModal('#bill-btn')
+        $$('.popover').removeClass('modal-in').removeClass('remove-on-close')
         dynamicPopover.text(`Your Bill is: ${billInput}`)
         dynamicPopover.prepend('<i class="far fa-edit" style="margin-left:5px;"></i>')
         // $$('#tip').remove()
         // $$('.card-content').append('<p id="tip">10.00</p>')
       }
+      setTimeout(() => {
+        $$('.popover').remove()
+      }, 100)
     })
   }
 })
