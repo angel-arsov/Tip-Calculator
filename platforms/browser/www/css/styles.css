@@ -113,3 +113,12 @@ h1, .block {
 .radio-check {
   color: #bfcd3a;
 }
+#signature {
+  position: absolute;
+  padding: 7px;
+  opacity: 0.6;
+}
+#copy {
+  padding: 7px;
+  opacity: 0.6;
+}
