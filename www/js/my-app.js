@@ -147,6 +147,7 @@ function hasRadio (element) {
 function printTip (tipResult) {
   $$('#tip').remove()
   $$('.card-content').append(`<p id="tip">${tipResult.toFixed(2)}</p>`)
+  $$('#tip').addClass('focus-in-contract')
 }
 
 // Calculating the tip
