@@ -75,8 +75,7 @@ $$(document).on('click touchend', function (event) {
         $$('.popover').removeClass('modal-in').removeClass('remove-on-close')
         dynamicPopover.text(`Your Bill is: ${billInput}`)
         dynamicPopover.prepend('<i class="far fa-edit" style="margin-left:5px;"></i>')
-        // $$('#tip').remove()
-        // $$('.card-content').append('<p id="tip">10.00</p>')
+        printTip(tipResult)
       }
       setTimeout(() => {
         $$('.popover').remove()
@@ -85,53 +84,98 @@ $$(document).on('click touchend', function (event) {
 
     // Inititating the variables for the calculating algorithm
     let bill = Number(dynamicPopover.text().replace(/^\D+/g, ''))
-    let service = 0
-    let smile = 0
+    let tipResult = 0
+
+    let mug = $$('.fa-mug-hot')
+    let hamburger = $$('.fa-hamburger')
+    let glass = $$('.fa-glass-cheers')
+    let meh = $$('.fa-meh-rolling-eyes')
+    let smile = $$('.fa-smile')
+    let grin = $$('.fa-grin-stars')
 
     // First group of radio buttons
     if ($$('#service-1').prop('checked')) {
-      $$('.fa-mug-hot').css('color', '#bfcd3a')
-      $$('.fa-hamburger').css('color', '#8e8e93')
-      $$('.fa-glass-cheers').css('color', '#8e8e93')
-      service = 1
+      radioCheck(mug, hamburger, glass)
+      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
+      printTip(tipResult)
     }
     if ($$('#service-2').prop('checked')) {
-      $$('.fa-hamburger').css('color', '#bfcd3a')
-      $$('.fa-mug-hot').css('color', '#8e8e93')
-      $$('.fa-glass-cheers').css('color', '#8e8e93')
-      service = 2
+      radioCheck(hamburger, mug, glass)
+      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
+      printTip(tipResult)
     }
     if ($$('#service-3').prop('checked')) {
-      $$('.fa-glass-cheers').css('color', '#bfcd3a')
-      $$('.fa-hamburger').css('color', '#8e8e93')
-      $$('.fa-mug-hot').css('color', '#8e8e93')
-      service = 3
+      radioCheck(glass, hamburger, mug)
+      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
+      printTip(tipResult)
     }
 
     // Second group of radio buttons
     if ($$('#smile-1').prop('checked')) {
-      $$('.fa-meh-rolling-eyes').css('color', '#bfcd3a')
-      $$('.fa-smile').css('color', '#8e8e93')
-      $$('.fa-grin-stars').css('color', '#8e8e93')
-      smile = 1
+      radioCheck(meh, smile, grin)
+      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
+      printTip(tipResult)
     }
     if ($$('#smile-2').prop('checked')) {
-      $$('.fa-smile').css('color', '#bfcd3a')
-      $$('.fa-meh-rolling-eyes').css('color', '#8e8e93')
-      $$('.fa-grin-stars').css('color', '#8e8e93')
-      smile = 2
+      radioCheck(smile, meh, grin)
+      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
+      printTip(tipResult)
     }
     if ($$('#smile-3').prop('checked')) {
-      $$('.fa-grin-stars').css('color', '#bfcd3a')
-      $$('.fa-smile').css('color', '#8e8e93')
-      $$('.fa-meh-rolling-eyes').css('color', '#8e8e93')
-      smile = 3
+      radioCheck(grin, smile, meh)
+      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
+      printTip(tipResult)
     }
   }
 })
 
-// Calculating algorithm
-$$(document).on('change', function () {
-  console.log('change')
+// Helper functions
+function radioCheck (e1, e2, e3) {
+  e1.addClass('radio-check')
+  e2.removeClass('radio-check')
+  e3.removeClass('radio-check')
+}
 
-})
+function hasRadio (element) {
+  if (element.hasClass('radio-check')) {
+    return true
+  } else {
+    return false
+  }
+}
+
+function printTip (tipResult) {
+  $$('#tip').remove()
+  $$('.card-content').append(`<p id="tip">${tipResult.toFixed(2)}</p>`)
+}
+
+// Calculating the tip
+function tipService (bill, tipResult, mug, hamburger, glass, meh, smile, grin) {
+  tipResult = 0
+  if (hasRadio(mug)) {
+    if (hasRadio(meh)) {
+      tipResult = bill * 0.03
+    } else if (hasRadio(smile)) {
+      tipResult = bill * 0.05
+    } else if (hasRadio(grin)) {
+      tipResult = bill * 0.08
+    }
+  } else if (hasRadio(hamburger)) {
+    if (hasRadio(meh)) {
+      tipResult = bill * 0.07
+    } else if (hasRadio(smile)) {
+      tipResult = bill * 0.1
+    } else if (hasRadio(grin)) {
+      tipResult = bill * 0.15
+    }
+  } else if (hasRadio(glass)) {
+    if (hasRadio(meh)) {
+      tipResult = bill * 0.1
+    } else if (hasRadio(smile)) {
+      tipResult = bill * 0.15
+    } else if (hasRadio(grin)) {
+      tipResult = bill * 0.2
+    }
+  }
+  return tipResult
+}
