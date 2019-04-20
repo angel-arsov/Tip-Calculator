@@ -28,7 +28,10 @@ $$('#exit').on('click', function () {
 
 // Handle refresh button
 $$('#refresh').on('click', function () {
-  window.location.reload()
+  $$('.page-content').prepend('<p><span class="progressbar-infinite"></span></p>')
+  setTimeout(() => {
+    window.location.reload()
+  }, 1000)
 })
 
 // Create dynamic popover
