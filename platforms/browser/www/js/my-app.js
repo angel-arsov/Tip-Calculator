@@ -156,7 +156,7 @@ function printTip (tipResult) {
   $$('#tip').addClass('focus-in-contract')
 }
 
-// Calculating the tip
+// Calculating the tip 
 function tipService (bill, tipResult, mug, hamburger, glass, meh, smile, grin) {
   tipResult = 0
   if (hasRadio(mug)) {
