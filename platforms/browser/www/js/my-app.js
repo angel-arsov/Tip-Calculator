@@ -5,7 +5,7 @@ const app = new Framework7()
 const $$ = Dom7
 
 // Add view
-app.addView('.view-main', {
+app.views.create('.view-main', {
   // Because we want to use dynamic navbar, we need to enable it for this view:
   dynamicNavbar: true
 })
@@ -35,28 +35,30 @@ $$('#refresh').on('click', function () {
 })
 
 // Create dynamic popover
-let dynamicPopover = $$('a.dynamic-popover')
-dynamicPopover.on('click', function () {
-  let clickedLink = this
-  let content = '<div class="popover">' +
-                  '<div class="popover-inner">' +
-                    '<div class="content-block">' +
-                      '<div class="list">' +
-                        '<ul>' +
-                          '<li class="row">' +
-                            '<a href="#" class="button color-teal" id="bill-btn">' +
-                              '<i class="fas fa-check-circle"></i>' +
-                            '</a>' +
-                            '<label class="item-content" id="number-label">' +
-                              '<input type="number" placeholder="Your Bill" id="bill-input">' +
-                            '</label>' +
-                          '</li>' +
-                        '</ul>' +
-                      '</div>' +
-                    '</div>' +
-                  '</div>' +
-                '</div>'
-  app.popover(content, clickedLink)
+let dynamicPopover = app.popover.create({
+  targetEl: 'a.dynamic-popover',
+  content: '<div class="popover">' +
+            '<div class="popover-inner">' +
+              '<div class="content-block">' +
+                '<div class="list">' +
+                  '<ul>' +
+                    '<li class="row" style="margin: 10px 0 10px 0;">' +
+                      '<a href="#" class="button color-teal" id="bill-btn">' +
+                        '<i class="fas fa-check-circle"></i>' +
+                      '</a>' +
+                      '<label class="item-content" id="number-label">' +
+                        '<input type="number" placeholder="Your Bill" id="bill-input">' +
+                      '</label>' +
+                    '</li>' +
+                  '</ul>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+           '</div>'
+})
+let inputPopover = $$('.dynamic-popover')
+inputPopover.on('click', function () {
+  dynamicPopover.open()
 })
 
 // Handle tap events
@@ -74,22 +76,17 @@ $$(document).on('click touchend', function (event) {
     $$('#bill-btn').on('click', function () {
       let billInput = $$('#bill-input').prop('value')
       if (billInput === '') {
-        app.closeModal('#bill-btn')
-        $$('.popover').removeClass('modal-in').removeClass('remove-on-close')
+        dynamicPopover.close()
       } else if (billInput !== '') {
-        app.closeModal('#bill-btn')
-        $$('.popover').removeClass('modal-in').removeClass('remove-on-close')
-        dynamicPopover.text(`Your Bill is: ${billInput}`)
-        dynamicPopover.prepend('<i class="far fa-edit" style="margin-left:5px;"></i>')
+        dynamicPopover.close()
+        inputPopover.text(`Your Bill is: ${billInput}`)
+        inputPopover.prepend('<i class="far fa-edit" style="margin-left:5px;"></i>')
         printTip(tipResult)
       }
-      setTimeout(() => {
-        $$('.popover').remove()
-      }, 100)
     })
 
     // Inititating the variables for the calculating algorithm
-    let bill = Number(dynamicPopover.text().replace(/^\D+/g, ''))
+    let bill = Number(inputPopover.text().replace(/^\D+/g, ''))
     let tipResult = 0
 
     let mug = $$('.fa-mug-hot')
@@ -156,7 +153,7 @@ function printTip (tipResult) {
   $$('#tip').addClass('focus-in-contract')
 }
 
-// Calculating the tip 
+// Calculating the tip
 function tipService (bill, tipResult, mug, hamburger, glass, meh, smile, grin) {
   tipResult = 0
   if (hasRadio(mug)) {

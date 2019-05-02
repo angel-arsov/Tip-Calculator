@@ -1,8 +1,8 @@
-.statusbar-overlay {
-  background: black;
+.right {
+  margin-left: 0 !important;
 }
-.page {
-  margin-top: 56px;
+.title {
+  color: #5c6223;
 }
 #exit, #refresh {
   font-size: 20px;
@@ -12,17 +12,25 @@
   height: 100%;
   padding-top: 6px;
 }
-.content-block {
-  margin-top: 0;
-  margin-bottom: 10px;
+.list {
+  margin: 10px 0;
 }
 ul {
   padding: 0;
+}
+ul:after, ul:before {
+  display: none !important;
 }
 li {
   list-style-type: none;
   margin-left: 20px;
   margin-right: 20px;
+}
+.row {
+  margin: 0 10%;
+}
+.item-radio {
+  padding: 0 !important;
 }
 .fa-check-circle {
   font-size: 40px;
@@ -57,6 +65,7 @@ h1, .block {
   font-size: 20px;
   color: #acb933;
   font-weight: bold;
+  margin: 10px;
 }
 ::-webkit-input-placeholder {
   font-size: 30px;
@@ -80,7 +89,6 @@ h1, .block {
   text-align: center;
   height: 50px;
   width: 140px;
-  margin-top: 6px;
   font-size: 30px;
 }
 #bill-input::-webkit-inner-spin-button { 
@@ -95,6 +103,7 @@ h1, .block {
   text-align: center;
   font-size: 40px;
   margin: auto;
+  color: #5c6223;
 }
 .card {
   background-color: #009688;
@@ -104,6 +113,12 @@ h1, .block {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5ffef', endColorstr='#009688',GradientType=1 );
   border-radius: 20px;
   margin: 8px 20px 8px 20px;
+}
+.popover {
+  display: block;
+  top: 20% !important;
+  left: 14% !important;
+  padding: 5px;
 }
 .dynamic-popover {
   border: 2px solid;
