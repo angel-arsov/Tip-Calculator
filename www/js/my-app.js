@@ -1,3 +1,5 @@
+/* global Framework7, Dom7 */
+
 // Initialize app
 const app = new Framework7()
 

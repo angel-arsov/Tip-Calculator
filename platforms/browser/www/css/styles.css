@@ -1,3 +1,6 @@
+#app {
+  height: 100%;
+}
 .right {
   margin-left: 0 !important;
 }
@@ -116,8 +119,7 @@ h1, .block {
 }
 .popover {
   display: block;
-  top: 20% !important;
-  left: 14% !important;
+  left: 12% !important;
   padding: 5px;
 }
 .dynamic-popover {
