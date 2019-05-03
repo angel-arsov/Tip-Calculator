@@ -61,6 +61,7 @@ let dynamicPopover = app.popover.create({
 let inputPopover = $$('.dynamic-popover')
 inputPopover.on('click', function () {
   dynamicPopover.open()
+  app.toolbar.hide('.toolbar')
 })
 
 // Handle tap events
@@ -81,6 +82,7 @@ $$(document).on('click touchend', function (event) {
         dynamicPopover.close()
       } else if (billInput !== '') {
         dynamicPopover.close()
+        app.toolbar.show('.toolbar')
         inputPopover.text(`Your Bill is: ${billInput}`)
         inputPopover.prepend('<i class="far fa-edit" style="margin-left:5px;"></i>')
         printTip(tipResult)

@@ -7,6 +7,10 @@
 .title {
   color: #5c6223;
 }
+.page {
+  background: -webkit-linear-gradient(-180deg, rgb(253, 255, 255), rgb(203, 236, 233));
+  background: linear-gradient(-180deg, rgb(253, 255, 255), rgb(203, 236, 233));
+}
 #exit, #refresh {
   font-size: 20px;
 }
@@ -15,11 +19,15 @@
   height: 100%;
   padding-top: 6px;
 }
+.block {
+  margin-top: 20px !important;
+}
 .list {
   margin: 10px 0;
 }
 ul {
   padding: 0;
+  background-color: transparent !important;
 }
 ul:after, ul:before {
   display: none !important;
