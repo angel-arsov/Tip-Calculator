@@ -45,7 +45,7 @@ let dynamicPopover = app.popover.create({
                 '<div class="list">' +
                   '<ul>' +
                     '<li class="row" style="margin: 10px 0 10px 0;">' +
-                      '<a href="#" class="button color-teal" id="bill-btn">' +
+                      '<a class="button color-teal" id="bill-btn">' +
                         '<i class="fas fa-check-circle"></i>' +
                       '</a>' +
                       '<label class="item-content" id="number-label">' +
@@ -73,65 +73,63 @@ $$(document).on('touchmove', function () {
   detectTap = false // Excludes the scroll events from touch events
 })
 $$(document).on('click touchend', function (event) {
-  if (event.type === 'click') detectTap = true // detects click events
-  if (detectTap) {
-    // Bill button
-    $$('#bill-btn').on('click', function () {
-      let billInput = $$('#bill-input').prop('value')
-      if (billInput === '') {
-        dynamicPopover.close()
-      } else if (billInput !== '') {
-        dynamicPopover.close()
-        app.toolbar.show('.toolbar')
-        inputPopover.text(`Your Bill is: ${billInput}`)
-        inputPopover.prepend('<i class="far fa-edit" style="margin-left:5px;"></i>')
-        printTip(tipResult)
+  if (event.type === 'click') { detectTap = true } // detects click events
+  if ($$(event.target).closest('.item-radio').length || !$$(event.target).closest('.page-content').length) {
+    if (detectTap) {
+      // Bill button
+      $$('#bill-btn').on('click', function () {
+        let billInput = $$('#bill-input').prop('value')
+        if (billInput === '') {
+          dynamicPopover.close()
+          app.dialog.close()
+          app.toolbar.show('.toolbar')
+          app.dialog.alert('You entered invalid input', '')
+        } else if (billInput !== '') {
+          dynamicPopover.close()
+          app.toolbar.show('.toolbar')
+          inputPopover.text(`Your Bill is: ${billInput}`)
+          inputPopover.prepend('<i class="far fa-edit" style="margin-left:5px;"></i>')
+          printTip(tipService(bill, mug, hamburger, glass, meh, smile, grin))
+        }
+      })
+
+      // Inititating the variables for the calculating algorithm
+      let bill = Number(inputPopover.text().replace(/^\D+/g, ''))
+
+      let mug = $$('.fa-mug-hot')
+      let hamburger = $$('.fa-hamburger')
+      let glass = $$('.fa-glass-cheers')
+      let meh = $$('.fa-meh-rolling-eyes')
+      let smile = $$('.fa-smile')
+      let grin = $$('.fa-grin-stars')
+
+      // First group of radio buttons
+      if ($$('#service-1').prop('checked')) {
+        radioCheck(mug, hamburger, glass)
+        printTip(tipService(bill, mug, hamburger, glass, meh, smile, grin))
       }
-    })
+      if ($$('#service-2').prop('checked')) {
+        radioCheck(hamburger, mug, glass)
+        printTip(tipService(bill, mug, hamburger, glass, meh, smile, grin))
+      }
+      if ($$('#service-3').prop('checked')) {
+        radioCheck(glass, hamburger, mug)
+        printTip(tipService(bill, mug, hamburger, glass, meh, smile, grin))
+      }
 
-    // Inititating the variables for the calculating algorithm
-    let bill = Number(inputPopover.text().replace(/^\D+/g, ''))
-    let tipResult = 0
-
-    let mug = $$('.fa-mug-hot')
-    let hamburger = $$('.fa-hamburger')
-    let glass = $$('.fa-glass-cheers')
-    let meh = $$('.fa-meh-rolling-eyes')
-    let smile = $$('.fa-smile')
-    let grin = $$('.fa-grin-stars')
-
-    // First group of radio buttons
-    if ($$('#service-1').prop('checked')) {
-      radioCheck(mug, hamburger, glass)
-      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
-      printTip(tipResult)
-    }
-    if ($$('#service-2').prop('checked')) {
-      radioCheck(hamburger, mug, glass)
-      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
-      printTip(tipResult)
-    }
-    if ($$('#service-3').prop('checked')) {
-      radioCheck(glass, hamburger, mug)
-      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
-      printTip(tipResult)
-    }
-
-    // Second group of radio buttons
-    if ($$('#smile-1').prop('checked')) {
-      radioCheck(meh, smile, grin)
-      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
-      printTip(tipResult)
-    }
-    if ($$('#smile-2').prop('checked')) {
-      radioCheck(smile, meh, grin)
-      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
-      printTip(tipResult)
-    }
-    if ($$('#smile-3').prop('checked')) {
-      radioCheck(grin, smile, meh)
-      tipResult = tipService(bill, tipResult, mug, hamburger, glass, meh, smile, grin)
-      printTip(tipResult)
+      // Second group of radio buttons
+      if ($$('#smile-1').prop('checked')) {
+        radioCheck(meh, smile, grin)
+        printTip(tipService(bill, mug, hamburger, glass, meh, smile, grin))
+      }
+      if ($$('#smile-2').prop('checked')) {
+        radioCheck(smile, meh, grin)
+        printTip(tipService(bill, mug, hamburger, glass, meh, smile, grin))
+      }
+      if ($$('#smile-3').prop('checked')) {
+        radioCheck(grin, smile, meh)
+        printTip(tipService(bill, mug, hamburger, glass, meh, smile, grin))
+      }
     }
   }
 })
@@ -158,8 +156,8 @@ function printTip (tipResult) {
 }
 
 // Calculating the tip
-function tipService (bill, tipResult, mug, hamburger, glass, meh, smile, grin) {
-  tipResult = 0
+function tipService (bill, mug, hamburger, glass, meh, smile, grin) {
+  let tipResult = 0
   if (hasRadio(mug)) {
     if (hasRadio(meh)) {
       tipResult = bill * 0.03456
