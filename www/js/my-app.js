@@ -3,7 +3,6 @@
 // Initialize app
 const app = new Framework7()
 
-// If we need to use custom DOM library, let's save it to $$ variable:
 const $$ = Dom7
 
 // Add view
@@ -56,12 +55,19 @@ let dynamicPopover = app.popover.create({
                 '</div>' +
               '</div>' +
             '</div>' +
-           '</div>'
+           '</div>',
+  on: {
+    open: function (popover) {
+      app.toolbar.hide('.toolbar')
+    },
+    close: function (popover) {
+      app.toolbar.show('.toolbar')
+    }
+  }
 })
 let inputPopover = $$('.dynamic-popover')
 inputPopover.on('click', function () {
   dynamicPopover.open()
-  app.toolbar.hide('.toolbar')
 })
 
 // Handle tap events
@@ -82,11 +88,9 @@ $$(document).on('click touchend', function (event) {
         if (billInput === '') {
           dynamicPopover.close()
           app.dialog.close()
-          app.toolbar.show('.toolbar')
           app.dialog.alert('You entered invalid input', '')
         } else if (billInput !== '') {
           dynamicPopover.close()
-          app.toolbar.show('.toolbar')
           inputPopover.text(`Your Bill is: ${billInput}`)
           inputPopover.prepend('<i class="far fa-edit" style="margin-left:5px;"></i>')
           printTip(tipService(bill, mug, hamburger, glass, meh, smile, grin))
